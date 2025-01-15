@@ -1,0 +1,15 @@
+*.o
+
+.DS_Store
+
+*.d
+
+obj/
+
+Megaphone
+
+*.dSYM/
+
+phonebook
+
+.vscode/
