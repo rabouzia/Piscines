@@ -6,33 +6,76 @@
 /*   By: ramzerk <ramzerk@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:05:48 by rabouzia          #+#    #+#             */
-/*   Updated: 2024/12/30 14:38:46 by ramzerk          ###   ########.fr       */
+/*   Updated: 2025/01/17 14:17:09 by ramzerk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef BITCOINEXCHANGE_HPP
+# define BITCOINEXCHANGE_HPP
 
-# include <iostream>
-# include <fstream>
-# include <sstream>
-# include <string>
-# include <iomanip>
-# include <map>
+#include <map>
+#include <algorithm>
+#include <fstream>
+#include <iostream>
 
-class BitcoinExchange{
-	
-	private:
-			std::map<std::string, double> _map;
+typedef struct	s_date
+{
+	int	year;
+	int	month;
+	int	day;
+	int	daysInMonth;
+}				t_date;
+
+class BitcoinExchange
+{
+public:
+	~BitcoinExchange();
+	BitcoinExchange();
+	BitcoinExchange(const BitcoinExchange& other);
+	BitcoinExchange& operator=(const BitcoinExchange& other);
+
+	void		run(std::ifstream& in);
+
+	class CouldNotOpenException : public std::exception
+	{
 	public:
-		BitcoinExchange();
-		BitcoinExchange(BitcoinExchange const &copy);
-		BitcoinExchange & operator =(BitcoinExchange const & other);
-		~BitcoinExchange();
+		virtual const char *what() const throw();
+	};
 
-		bool ProcessFile(std::string file);
-		void FillMap(std::string csvFile);
-		int ParsingDate(std::string &date);
-		void ParsingValue(std::string value, std::string date);
-		void ExchangeData(std::string InputFile);
-			
+	class FormatInvalidException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw();
+	};
+
+	class BadInputException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw();
+	};
+
+	class NegativeValueException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw();
+	};
+
+	class LargeValueException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw();
+	};
+
+private:
+	std::map<std::string, double> data;
+
+	void		exchange(std::string date, double amount);
+	std::string	trim(std::string line);
+	t_date		datetoi(std::string date);
+	double		validateAmount(std::string& amount);
+	bool		validateDate(t_date& date);
+	bool		isleap(int& year);
 };
+
+
+#endif

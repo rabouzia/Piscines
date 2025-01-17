@@ -1,10 +1,7 @@
-NAME       =	phonebook
+NAME       =	PMergeMe
 
 SRC        =	src/main.cpp 		\
-				src/phonebook.cpp 	\
-				src/setters.cpp 	\
-				src/getters.cpp		\
-				src/add.cpp			
+				src/PmergeMe.cpp 	\
 
 CC 		   =	c++
 
