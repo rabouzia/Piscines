@@ -18,7 +18,9 @@ BitcoinExchange::BitcoinExchange()
 		rate = atof(input.substr(input.find(',') + 1, input.size()).c_str());
 		this->data[date] = rate;
 	}
-	this->data.erase(std::prev(this->data.end()));
+	std::map<std::string, double>::iterator it = this->data.end();
+	--it; 
+	this->data.erase(it);
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
@@ -123,7 +125,11 @@ void	BitcoinExchange::exchange(std::string date, double amount)
 	if (itr == data.begin() || itr->first == date)
 		std::cout << amount * itr->second << std::endl;
 	else if (itr == data.end())
-		std::cout << amount * std::prev(itr)->second << std::endl;
+	{	
+		--itr;
+		std::cout << amount * itr->second << std::endl;
+		++itr;
+	}
 	else
 	{
 		--prev;
