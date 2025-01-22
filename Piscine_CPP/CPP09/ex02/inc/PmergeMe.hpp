@@ -13,12 +13,12 @@
 
 #pragma once
 
-#include<iostream>
+#include <iostream>
 #include <sstream>
-#include<vector>
-#include<algorithm>
-#include<deque>
-#include<ctime>
+#include <vector>
+#include <algorithm>
+#include <deque>
+#include <ctime>
 
 #define RED "\e[1;31m"
 #define WHI "\e[0;37m"
@@ -27,27 +27,24 @@
 
 class PmergeMe
 {
-private:
-	std::vector<int> vec;
-	std::deque<int> deq;
-	double time;
-public:
-	PmergeMe();
-	PmergeMe(PmergeMe const &src);
-	PmergeMe &operator=(PmergeMe const &src);
-	~PmergeMe();
+	private:
+		std::vector<int> vec;
+		std::deque<int> deq;
+		double time;
+		
+	public:
+		PmergeMe();
+		PmergeMe(PmergeMe const &src);
+		PmergeMe &operator=(PmergeMe const &src);
+		~PmergeMe();
 
-	void print(std::string str);
-
-	void parsVector(char **av);
-	void insideVector(std::string av);
-
-	void parsDeque(char **av);
-	void insideDeque(std::string av);
-
-	void sortVector(char **av);
-	void sortDeque(char **av);
-
-	void JacobshtalNumvec(int n, std::vector<int> &jacobshtal);
-	void JacobshtalNumdeq(int n, std::deque<int> &jacobshtal);
+		void print(std::string str);
+		void parsVector(char **av);
+		void insideVector(std::string av);
+		void parsDeque(char **av);
+		void insideDeque(std::string av);
+		void sortVector(char **av);
+		void sortDeque(char **av);
+		void JacobshtalNumvec(int n, std::vector<int> &jacobshtal);
+		void JacobshtalNumdeq(int n, std::deque<int> &jacobshtal);
 };

@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BITCOINEXCHANGE_HPP
-# define BITCOINEXCHANGE_HPP
+#pragma once
 
 #include <map>
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <cstdlib>
 
 typedef struct	s_date
 {
@@ -28,55 +28,52 @@ typedef struct	s_date
 
 class BitcoinExchange
 {
-private:
-	std::map<std::string, double> data;
+	private:
+		std::map<std::string, double> data;
 
-	void		exchange(std::string date, double amount);
-	std::string	trim(std::string line);
-	t_date		datetoi(std::string date);
-	double		validateAmount(std::string& amount);
-	bool		validateDate(t_date& date);
-	bool		isleap(int& year);
+		void		exchange(std::string date, double amount);
+		std::string	trim(std::string line);
+		t_date		datetoi(std::string date);
+		double		validateAmount(std::string& amount);
+		bool		validateDate(t_date& date);
+		bool		isleap(int& year);
 
-public:
-	~BitcoinExchange();
-	BitcoinExchange();
-	BitcoinExchange(const BitcoinExchange& other);
-	BitcoinExchange& operator=(const BitcoinExchange& other);
-
-	void		run(std::ifstream& in);
-
-	class CouldNotOpenException : public std::exception
-	{
 	public:
-		virtual const char *what() const throw();
-	};
+		~BitcoinExchange();
+		BitcoinExchange();
+		BitcoinExchange(const BitcoinExchange& other);
+		BitcoinExchange& operator=(const BitcoinExchange& other);
 
-	class FormatInvalidException : public std::exception
-	{
-	public:
-		virtual const char *what() const throw();
-	};
+		void		run(std::ifstream& in);
 
-	class BadInputException : public std::exception
-	{
-	public:
-		virtual const char *what() const throw();
-	};
+		class CouldNotOpenException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
 
-	class NegativeValueException : public std::exception
-	{
-	public:
-		virtual const char *what() const throw();
-	};
+		class FormatInvalidException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
 
-	class LargeValueException : public std::exception
-	{
-	public:
-		virtual const char *what() const throw();
-	};
+		class BadInputException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
+
+		class NegativeValueException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
+
+		class LargeValueException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
 
 };
-
-
-#endif

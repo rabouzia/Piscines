@@ -6,7 +6,7 @@
 /*   By: ramzerk <ramzerk@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 15:27:39 by ramzerk           #+#    #+#             */
-/*   Updated: 2024/12/24 15:27:41 by ramzerk          ###   ########.fr       */
+/*   Updated: 2025/01/22 22:20:38 by ramzerk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,43 +35,15 @@ void PmergeMe::print(std::string str)
 	}
 	std::cout << std::endl;
 }
-//#####################################parsing VECTOR#######################################
 
-void PmergeMe::insideVector(std::string av)
-{
-	for (size_t i = 0; i < av.length(); i++){
-		if (av[i] == ' ')
-			continue;
-		if (!std::isdigit(av[i]))
-				throw std::runtime_error("Error");
-	}
-	std::istringstream iss(av);
-	std::string tmp;
-	while (iss >> tmp)
-		this->vec.push_back(std::atoi(tmp.c_str()));
-}
+//#####################################vector#######################################
 
 void PmergeMe::parsVector(char **av)
 {
-	for (size_t i = 1; av[i]; i++){
-		int flag = 0;
-		for (size_t j = 0; av[i][j]; j++){
-			if (av[i][j] == ' '){
-				flag = 1;
-				insideVector(av[i]);
-				break;
-			}
-			else if (!std::isdigit(av[i][j]))
-				throw std::runtime_error("Error");
-		}
-		if (flag == 0)
+	for (size_t i = 1; av[i]; i++)
 			this->vec.push_back(std::atoi(av[i]));
-	}
-	if (this->vec.size() == 1)
-		throw std::runtime_error("Error");
 }
 
-//#####################################vector#######################################
 void sortVectorPair(std::vector<std::pair<int, int> > &v_p)
 {
 	std::pair<int, int> p;
@@ -160,43 +132,16 @@ void PmergeMe::sortVector(char **av)
 	ev = clock();
 	this->time = (double)(ev - sv);
 }
-//#####################################parsing DEQUE#######################################
 
-void PmergeMe::insideDeque(std::string av)
-{
-	for (size_t i = 0; i < av.length(); i++){
-		if (av[i] == ' ')
-			continue;
-		if (!std::isdigit(av[i]))
-				throw std::runtime_error("Error");
-	}
-	std::istringstream iss(av);
-	std::string tmp;
-	while (iss >> tmp)
-		this->deq.push_back(std::atoi(tmp.c_str()));
-}
+//#####################################deque#######################################
 
 void PmergeMe::parsDeque(char **av)
 {
 	for (size_t i = 1; av[i]; i++){
-		int flag = 0;
-		for (size_t j = 0; av[i][j]; j++){
-			if (av[i][j] == ' '){
-				flag = 1;
-				insideDeque(av[i]);
-				break;
-			}
-			else if (!std::isdigit(av[i][j]))
-				throw std::runtime_error("Error");
-		}
-		if (flag == 0)
 			this->deq.push_back(std::atoi(av[i]));
 	}
-	if (this->deq.size() == 1)
-		throw std::runtime_error("Error");
 }
 
-//#####################################deque#######################################
 void sortDequePair(std::deque<std::pair<int, int> > &d_p)
 {
 	std::pair<int, int> p;
@@ -243,18 +188,22 @@ void PmergeMe::sortDeque(char **av)
 	if (this->deq.size() % 2 != 0)
 		is_odd = 1;
 	int len = this->deq.size();
-	if (is_odd){
+	if (is_odd)
+	{
 		odd = *this->deq.rbegin();
 		len -= 1;
 	}
 	std::deque<std::pair<int, int> > d_p;
 	std::pair<int, int> p;
-	for (int i = 0; i < len; i += 2){
-		if (this->vec[i] >= this->vec[i + 1]){
+	for (int i = 0; i < len; i += 2)
+	{
+		if (this->vec[i] >= this->vec[i + 1])
+		{
 			p.first = this->vec[i];
 			p.second = this->vec[i + 1];
 		}
 		else{
+			
 			p.first = this->vec[i + 1];
 			p.second = this->vec[i];
 		}
@@ -263,7 +212,8 @@ void PmergeMe::sortDeque(char **av)
 	sortDequePair(d_p);
 	std::deque<int> main;
 	std::deque<int> pending;
-	for (int i = 0; i < static_cast<int>(d_p.size()); i++){
+	for (int i = 0; i < static_cast<int>(d_p.size()); i++)
+	{
 		main.push_back(d_p[i].first);
 		pending.push_back(d_p[i].second);
 	}
@@ -271,12 +221,16 @@ void PmergeMe::sortDeque(char **av)
 	JacobshtalNumdeq(len, jacobs);
 	main.insert(main.begin(), pending[0]);
 	int i = 1, j = 1;
-	while(i < (int)pending.size() && j < (int)jacobs.size()){
-		if (jacobs[j] < (int)pending.size()){
+	while(i < (int)pending.size() && j < (int)jacobs.size())
+	{
+		if (jacobs[j] < (int)pending.size())
+		{
 			main.insert(std::lower_bound(main.begin(), main.end(), pending[jacobs[j]]), pending[jacobs[j]]);
-			i++; j++;
+			i++; 
+			j++;
 		}
-		else j++;
+		else 
+			j++;
 	}
 	if (is_odd)
 		main.insert(std::lower_bound(main.begin(), main.end(), odd), odd);
@@ -288,13 +242,4 @@ void PmergeMe::sortDeque(char **av)
 	std::cout << (double)(ed - sd) << " us" << std::endl;
 	std::cout << "Time to process a range of "<<this->vec.size() << " elements with std::vector : ";
 	std::cout << this->time << " us" << std::endl;
-
-	{// forbidden function
-		// this->deq.push_back(1);
-		// if (!std::is_sorted(this->deq.begin(), this->deq.end()))
-		// 	throw std::runtime_error("Error: deque not sorted");
-			// this->vec.push_back(1);
-		// if (!std::is_sorted(this->vec.begin(), this->vec.end()))
-		// 	throw std::runtime_error("Error: vector not sorted");
-	}
 }

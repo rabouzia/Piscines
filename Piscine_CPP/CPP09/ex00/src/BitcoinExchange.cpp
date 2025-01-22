@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ramzerk <ramzerk@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 23:51:38 by ramzerk           #+#    #+#             */
+/*   Updated: 2025/01/22 23:51:39 by ramzerk          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "BitcoinExchange.hpp"
 
 BitcoinExchange::~BitcoinExchange(){}
@@ -66,11 +78,11 @@ t_date	BitcoinExchange::datetoi(std::string date)
 		if (!isdigit(date[i]))
 			throw(BitcoinExchange::BadInputException());
 	}
-	result.year = stoi(date);
+	result.year = std::atoi(date.c_str());
 	date.erase(0, 5);
-	result.month = stoi(date);
+	result.month = std::atoi(date.c_str());
 	date.erase(0, 3);
-	result.day = stoi(date);
+	result.day = std::atoi(date.c_str());
 
 	int	daysInMonths[13] = {0, 31, 28, 31, 30, 31, 30 ,31 ,31 ,30 ,31 ,30 , 31};
 

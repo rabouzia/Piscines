@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RPN_HPP
-# define RPN_HPP
+#pragma once
 
 # include <iostream>
 # include <string>
@@ -19,21 +18,20 @@
 # include <cmath>
 # include <sstream>
 # include <iomanip>
+# include <cstdlib>
 # include <exception>
 
 class RPN
 {
-private:
-	std::stack<int> stack;
-	std::string str;
-public:
-	RPN();
-	RPN(std::string str);
-	RPN(RPN const & src);
-	RPN & operator=(RPN const & src);
-	~RPN();
-	void check_arg(std::string str);
-	void calculate();
+	private:
+		std::stack<int> stack;
+		std::string str;
+	public:
+		RPN();
+		RPN(std::string str);
+		RPN(RPN const & src);
+		RPN & operator=(RPN const & src);
+		~RPN();
+		void check_arg(std::string str);
+		void calculate();
 };
-
-#endif
